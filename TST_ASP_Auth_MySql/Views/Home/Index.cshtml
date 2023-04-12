@@ -1,0 +1,25 @@
+﻿@model TST_ASP_Auth_MySql.ViewModels.IndexViewModel
+
+@{ ViewData["Title"] = "Home Page"; }
+
+<div class="text-center">
+    <div>User: @Html.DisplayFor(p => p.UserName) Role: @Html.DisplayFor(p => p.UserRoleName)</div>
+    <div></div>
+    <div>All Users:</div>
+    @foreach (var user in Model.AllUsers)
+    {
+        <div>
+            <h4>@user.Email</h4>
+            @if (user.Avatar != null)
+            {
+                <img style='width: 80px; height: 60px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(user.Avatar))" />
+            }
+            @if(Model.UserRoleName == "admin")
+            {
+                <form asp-controller="Home" asp-action="Delete" method="post"  asp-route-id="@user.Id">
+                    <input type="submit" value="Delete" />
+                </form>
+            }
+        </div>
+    }
+</div>
